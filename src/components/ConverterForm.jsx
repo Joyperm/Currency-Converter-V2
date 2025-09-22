@@ -8,13 +8,14 @@ export default function ConverterForm() {
   const [toCurrency, setToCurrency] = useState("EUR");
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [rate, setRate] = useState(null); // store exchange rate to avoid redundant API calls
 
   //   fetch exchange rate and calculate the result
   const getExchangeRate = async () => {
     const API_KEY = import.meta.env.VITE_EXCHANGE_API_KEY;
     const API_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${fromCurrency}`;
 
-    // console.log(API_URL);
+    console.log(API_URL);
 
     if (isLoading) return;
     setIsLoading(true);
@@ -25,9 +26,8 @@ export default function ConverterForm() {
 
       const data = await response.json();
       const exRate = data.conversion_rates[toCurrency];
-      const rate = (exRate * Number(amount)).toFixed(2);
+      setRate(exRate); // update rate state
 
-      setResult(`${amount} ${fromCurrency.toUpperCase()} = ${rate}`);
     } catch (error) {
       setResult(`Error: ${error.message}`);
     } finally {
@@ -35,9 +35,19 @@ export default function ConverterForm() {
     }
   };
 
+  // fetch new rate when fromCurrency or toCurrency changes
   useEffect(() => {
     getExchangeRate();
   }, [fromCurrency, toCurrency]);
+
+  // recalc locally when amount OR rate changes
+  useEffect(() => {
+    if (rate !== null) {
+      const converted = (rate * Number(amount)).toFixed(2);
+      setResult(`${amount} ${fromCurrency} = ${converted} ${toCurrency}`);
+    }
+  }, [amount, rate, fromCurrency, toCurrency]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -139,7 +149,7 @@ export default function ConverterForm() {
           >
             <p className="text-xl font-mono text-white text-center  ">
               <span className="text-yellow-100 border-b-2 text-2xl">
-                Result: {result} {toCurrency}
+                Result: {result}
               </span>
             </p>
           </div>
