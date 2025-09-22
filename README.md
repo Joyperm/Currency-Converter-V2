@@ -81,11 +81,11 @@ npm run dev
 
 ### 📂 Project Structure
 src/
- ┣ components/    # Reusable UI components
- ┣ data/          # currency information JSON
- ┣ App.jsx        # Main application entry
- ┣ main.jsx       # ReactDOM render
- ┗ index.css      # Tailwind styles
+ - components/    # Reusable UI components
+ - data/          # currency information JSON
+ - App.jsx        # Main application entry
+ - main.jsx       # ReactDOM render
+ - index.css      # Tailwind styles
 
 
 ### 🔮 Future Improvements
