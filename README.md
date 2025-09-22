@@ -6,6 +6,13 @@ This project is inspired by [CodingNepal’s React Currency Converter tutorial](
 
 ---
 
+## Live Demo
+## [Live Demo🚀🎉](https://www.joytodev.com/projects/currencyConverter)
+
+<p align="center">
+  <img src="./public/currency.png" alt="App Screenshot" width="600"/>
+</p>
+
 ## 🚀 Features
 - Convert between **over 150 currencies** with live exchange rates  
 - Beautiful **country flag display** for selected currencies  
